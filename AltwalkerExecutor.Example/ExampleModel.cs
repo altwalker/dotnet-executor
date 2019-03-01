@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using NUnit.Framework;
 
-namespace Altwalker.Csharp.Example
+namespace Altwalker.Executor
 {
     public class ExampleModel
     {
