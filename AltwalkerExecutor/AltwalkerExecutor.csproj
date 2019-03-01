@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Altwalker.Executor</PackageId>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Altom.Altwalker</RootNamespace>
+    <IsPackable>true</IsPackable>
+    <PackageVersion>0.1</PackageVersion>
+    <Title> Altwalker dotnet executor</Title>
+    <Description>
+      Altwalker dotnet executor runs dotnet written tests using Altwalker.
+    </Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include=".\LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
+  </ItemGroup>
+</Project>

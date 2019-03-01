@@ -1,0 +1,27 @@
+{
+	"models": [
+		{
+			"name": "ExampleModel",
+			"generator": "random(vertex_coverage(100))",
+			"startElementId": "vertex_1",
+			"vertices": [
+				{
+					"id": "vertex_1",
+					"name": "vertex_1"
+				},
+				{
+					"id": "vertex_2",
+					"name": "vertex_2"
+				}
+			],
+			"edges": [
+				{
+					"id": "edge_1",
+					"name": "edge_1",					
+					"sourceVertexId": "vertex_1",
+					"targetVertexId": "vertex_2"
+				}
+			]
+		}
+	]
+}
