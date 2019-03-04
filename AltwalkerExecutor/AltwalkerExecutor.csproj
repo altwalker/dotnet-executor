@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageId>Altwalker.Executor</PackageId>
+    <PackageId>altwalker.executor</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Altom.Altwalker</RootNamespace>
     <IsPackable>true</IsPackable>

@@ -1,0 +1,14 @@
+stages:
+  - test
+  - publish
+
+image: mcr.microsoft.com/dotnet/core/sdk:2.2
+
+tests:
+  stage: test
+  script: dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
+
+
+dotnet pack:
+  stage: publish
+  script: dotnet pack AltwalkerExecutor
