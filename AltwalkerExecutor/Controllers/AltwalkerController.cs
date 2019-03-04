@@ -31,7 +31,7 @@ namespace Altom.Altwalker.Controllers {
             return new JsonResult (new { status = "nok" });
         }
 
-        [HttpGet ("executestep")]
+        [HttpPost ("executestep")]
         public ActionResult ExecuteStep (string model, string step) {
             try {
                 var result =executor.ExecuteStep (model, step);

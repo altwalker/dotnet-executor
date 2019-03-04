@@ -12,7 +12,7 @@ namespace Altwalker.Executor
             Assert.IsTrue(true);
         }
 
-        public void edge_1(int data )
+        public void edge_1()
         {
             Trace.WriteLine("edge_1");
             Assert.IsTrue(true);
