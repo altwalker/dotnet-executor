@@ -90,7 +90,7 @@ namespace Altom.Altwalker {
             }
         }
 
-        public void Restart()
+        public void Reset()
         {
             modelInstances = new Dictionary<Type, object>();
         }

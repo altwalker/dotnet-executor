@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Altom.Altwalker.Controllers {
-    
+
     [Route ("[controller]")]
     [HandleException]
     public class AltwalkerController : Controller {
@@ -17,33 +17,31 @@ namespace Altom.Altwalker.Controllers {
             this.executor = executor;
         }
 
-        [HttpGet ("hasmodel")]
-        public ActionResult HasModel (string model) {
-            if (executor.HasModel (model))
-                return new JsonResult (new { status = "ok" });
-            return new JsonResult (new { status = "nok" });
+        [HttpGet ("hasModel")]
+        public ActionResult HasModel (string name) {
+            var hasModel = executor.HasModel (name);
+            return new JsonResult (new { hasModel = hasModel });
         }
 
-        [HttpGet ("hasstep")]
-        public ActionResult HasStep (string model, string step) {
-            if (executor.HasStep (model, step))
-                return new JsonResult (new { status = "ok" });
-            return new JsonResult (new { status = "nok" });
+        [HttpGet ("hasStep")]
+        public ActionResult HasStep (string modelName, string name) {
+            var hasStep = executor.HasStep (modelName, name);
+            return new JsonResult (new { hasStep = hasStep });
         }
 
-        [HttpPost ("executestep")]
-        public ActionResult ExecuteStep (string model, string step) {
+        [HttpPost ("executeStep")]
+        public ActionResult ExecuteStep (string modelName, string name) {
             try {
-                var result =executor.ExecuteStep (model, step);
-                return new JsonResult (new{ output = result.output});
+                var result = executor.ExecuteStep (modelName, name);
+                return new JsonResult (new { output = result.output });
             } catch (StepExecutionException ex) {
                 return new JsonResult (new { error = ex.InnerException.ToString () });
             }
         }
 
-        [HttpGet ("restart")]
-        public ActionResult Restart () {
-            executor.Restart();
+        [HttpGet ("reset")]
+        public ActionResult Reset () {
+            executor.Reset ();
             return new JsonResult (new { status = "ok" });
         }
     }

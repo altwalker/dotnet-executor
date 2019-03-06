@@ -25,6 +25,6 @@ To execute your dotnet tests using altwalker you can use Altwalker.Executor pack
 
 * Run altwalker online:
 
-`altwalker online -x dotnet path/to/console/project/ -m path/to/model.json "random(edge_coverage(100))"`
+`altwalker online -l dotnet path/to/console/project/ -m path/to/model.json "random(edge_coverage(100))"`
 
-`altwalker online -x dotnet path/to/console/project/app.dll -m path/to/model.json "random(edge_coverage(100))"`
+`altwalker online -l dotnet path/to/console/project/app.dll -m path/to/model.json "random(edge_coverage(100))"`
