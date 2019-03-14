@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
-
 namespace Altom.Altwalker {
     public class ExecutorService {
         IWebHost host = null;
@@ -25,7 +24,7 @@ namespace Altom.Altwalker {
                     services.AddMvc ();
                 })
                 .Configure (applicationBuilder => {
-                    applicationBuilder.UseMvc ();
+                    applicationBuilder.UseMvc();
                 })
                 .Build ();
 

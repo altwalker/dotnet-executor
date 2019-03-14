@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Altom.Altwalker {
     /// <summary>
-    /// Executes code 
+    /// Executes steps from registered models and setup
     /// </summary>
     public class Executor {
         readonly IDictionary<string, Type> models;
@@ -41,58 +41,72 @@ namespace Altom.Altwalker {
         /// Checks if the type registered for `modelName` has a public method named `stepName`
         /// </summary>
         /// <param name="modelName"></param>
-        /// <param name="stepName"></param>
+        /// <param name="name"></param>
         /// <returns>True if the method exists</returns>
-        public bool HasStep (string modelName, string stepName) {
+        public bool HasStep (string modelName, string name) {
             var type = GetModelType (modelName);
             if (type == null)
                 return false;
 
-            if (GetMethodInfo (type, stepName) == null)
+            if (GetMethodInfo (type, name) == null)
                 return false;
 
             return true;
         }
 
-
         /// <summary>
-        /// Executes the public method named `stepName` from the type registered for `modelName`
+        /// Executes the public method `name` from the type `modelName` registered.
         /// </summary>
         /// <param name="modelName"></param>
-        /// <param name="stepName"></param>
+        /// <param name="name"></param>
         /// <returns>Trace output written during execution of method.</returns>
-        public ExecuteStepResult ExecuteStep (string modelName, string stepName) {
+        public ExecuteStepResult ExecuteStep (string modelName, string name, IDictionary<string, dynamic> data=null) {
+            data = data ?? new Dictionary<String,dynamic>();
             Type modelType = GetModelType (modelName);
             if (modelType == null)
             
-                throw new Exception (
-                    $"No model named `{modelName}` was registered in th executor service." + 
-                    $"Consider using ExecutorService.RegisterModel<{modelName}>() or ExecutorService.RegisterSetup<T>(). ");
+                throw new ArgumentException (
+                    $"No model named `{modelName}` was registered in the executor service." + 
+                    $"Consider using ExecutorService.RegisterModel<{modelName}>() or ExecutorService.RegisterSetup<T>(). ", nameof(modelName));
 
-            MethodInfo method = GetMethodInfo (modelType, stepName);
-            if (method == null)
-                throw new Exception (
-                    $"No public method named `{stepName}` was found in class `{modelName}`. "+
-                    $"Check that the model is registered and the public method `{stepName}` exists. "
+            MethodInfo stepMethod = GetMethodInfo (modelType, name);
+            if (stepMethod == null)
+                throw new ArgumentException (
+                    $"No public method named `{name}` was found in class `{modelName}`. "+
+                    $"Check that the model is registered and the public method `{name}` exists. ", nameof(name)
                 );
 
-            object instance = GetInstance(modelType);
-            
-            using (StepTraceListener stepTrace = new StepTraceListener ()) {
-                try {
-                    method.Invoke (instance, null);
-                }
-                catch (TargetInvocationException tie) {
-                    throw new StepExecutionException(tie.InnerException);
-                }
-                var output = stepTrace.GetOutput();
-                return new ExecuteStepResult { output = output };
-            }
+            return ExecuteStep(modelType, stepMethod, data);
         }
 
         public void Reset()
         {
             modelInstances = new Dictionary<Type, object>();
+        }
+
+        private ExecuteStepResult ExecuteStep(Type model, MethodInfo stepMethod, IDictionary<String,dynamic> data)
+        {
+            object instance = GetInstance(model);
+            using (StepTraceListener stepTrace = new StepTraceListener ()) {
+                var result = new ExecuteStepResult();
+                
+                try {
+                    var parameters = stepMethod.GetParameters();
+                    if ( parameters.Length == 1 && parameters[0].ParameterType == typeof (IDictionary<string, dynamic>))
+                    {
+                        result.data = data;
+                        stepMethod.Invoke(instance,new object[] {data});
+                    }
+                    else
+                        stepMethod.Invoke (instance, null);
+                }
+                catch (TargetInvocationException tie) {
+                    throw new StepExecutionException(tie.InnerException);
+                }
+                result.output = stepTrace.GetOutput();
+
+                return result;
+            }
         }
 
         private Type GetModelType (string modelName) {
@@ -121,6 +135,7 @@ namespace Altom.Altwalker {
 
     public class ExecuteStepResult {
         public string output { get; set; }
+        public IDictionary<string, dynamic> data {get;set;}
     }
 
 

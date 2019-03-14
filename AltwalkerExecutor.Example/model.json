@@ -1,25 +1,25 @@
 {
 	"models": [
 		{
-			"name": "ExampleModel",
+			"name": "WalletModel",
 			"generator": "random(vertex_coverage(100))",
-			"startElementId": "vertex_1",
+			"startElementId": "full_wallet",
 			"vertices": [
 				{
-					"id": "vertex_1",
-					"name": "vertex_1"
+					"id": "full_wallet",
+					"name": "full_wallet"
 				},
 				{
-					"id": "vertex_2",
-					"name": "vertex_2"
+					"id": "non_full_wallet",
+					"name": "non_full_wallet"
 				}
 			],
 			"edges": [
 				{
-					"id": "edge_1",
-					"name": "edge_1",					
-					"sourceVertexId": "vertex_1",
-					"targetVertexId": "vertex_2"
+					"id": "pay_random_amount",
+					"name": "pay_random_amount",					
+					"sourceVertexId": "full_wallet",
+					"targetVertexId": "non_full_wallet"
 				}
 			]
 		}

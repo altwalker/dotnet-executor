@@ -29,7 +29,7 @@ namespace Tests {
         }
 
         [Test]
-        public void ExectuorWithStartup_HasSetupRun()
+        public void HasStep_HasSetupRun()
         {
             Assert.IsTrue(_executorWithStartup.HasStep(null, "SetupRun"));
             Assert.IsFalse(_executor.HasStep(null, "SetupRun"));
@@ -49,6 +49,43 @@ namespace Tests {
 
             Assert.That(ex.InnerException.Message, Is.EqualTo("Exception message"));
         }
+
+        
+        [Test]
+        public void ExecuteStep_WithData()
+        {
+            var data =  new Dictionary<string,dynamic>();
+            var result = _executor.ExecuteStep("ModelExample", "MethodSetData", data);
+            Assert.AreEqual(true, result.data["passed"]);
+        }
+
+        [Test]
+        public void ExecuteStep_NoDataParameter()
+        {
+            var result = _executor.ExecuteStep("ModelExample", "MethodNoData", new Dictionary<string,dynamic>());
+            Assert.AreEqual(string.Empty, result.output);
+        }
+
+        [Test]
+        public void ExecuteStep_InexistentModel()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => _executor.ExecuteStep("Inexistent", "MyStep"));
+
+            
+            Assert.That(ex.Message, Is.EqualTo("No model named `Inexistent` was registered in the executor service.Consider using ExecutorService.RegisterModel<Inexistent>() or ExecutorService.RegisterSetup<T>(). \n"
+            +"Parameter name: modelName"));
+        }
+
+        [Test]
+        public void ExecuteStep_InvalidStep()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => _executor.ExecuteStep("ModelExample", "StepDoesNotExist"));
+
+            Assert.That(ex.Message, Is.EqualTo("No public method named `StepDoesNotExist` was found in class `ModelExample`. Check that the model is registered and the public method `StepDoesNotExist` exists. \n"+
+                "Parameter name: name"));
+        }
     }
 
     public class ModelExample {
@@ -62,6 +99,16 @@ namespace Tests {
         public void Fail () {
             Trace.WriteLine("Fail");
             throw new Exception("Exception message");
+        }
+
+        public void MethodSetData(IDictionary<string, dynamic> data)
+        {
+            data["passed"]=true;
+        }
+
+        public void MethodNoData()
+        {
+
         }
     }
 

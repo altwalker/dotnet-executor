@@ -2,29 +2,21 @@
 
 AltWalker is an open source, Model-based testing framework for automating your test execution. You design your tests as a directional graph and AltWalker executes them. It relies on [Graphwalker](http://graphwalker.github.io/) to generate paths through your tests graph.
 
-To execute your dotnet tests using altwalker you can use Altwalker.Executor package. You need to register your models and start the webservice.
+Use Altwalker.Executor to execute your dotnet tests with altwalker. Follow [altwalker C# quickstart](https://altom.gitlab.io/altwalker/altwalker/quickstart.html#c-quickstart) tutorial to get started.
 
-# Quickstart
 
-* Create a simple console application
+# Run Altwalker.Executor locally
 
-`dotnet new console`
+Run tests
 
-* Add Altwalker.Executor  package reference
+`dotnet test AltwalkerExecutor.Tests/`
 
-`dotnet add package Altwalker.Executor`
 
-* Register your models in `Program.cs`
+Start web service
 
-`ExecutorService service = new ExecutorService();`  
-`service.RegisterModel<ExampleModel>();`
+`dotnet run --project AltwalkerExecutor.Example/altwalkerexecutor.example.csproj --server.urls=http://localhost:5001`
 
-* Start the service 
 
-`service.Start(args);` - args param
+`curl -sv http://localhost:5001/altwalker/hasModel?name=WalletModel`
+`curl -sv http://localhost:5001/altwalker/hasStep?modelName=WalletModel&name=setUpModel`
 
-* Run altwalker online:
-
-`altwalker online -l dotnet path/to/console/project/ -m path/to/model.json "random(edge_coverage(100))"`
-
-`altwalker online -l dotnet path/to/console/project/app.dll -m path/to/model.json "random(edge_coverage(100))"`
