@@ -20,7 +20,7 @@ namespace Altom.Altwalker {
                 .UseKestrel ()
                 .UseConfiguration(config)
                 .ConfigureServices (services => {
-                    services.AddSingleton (typeof (Executor), new Executor (models, setup));
+                    services.AddSingleton (typeof (IExecutor), new Executor (models, setup));
                     services.AddMvc ();
                 })
                 .Configure (applicationBuilder => {

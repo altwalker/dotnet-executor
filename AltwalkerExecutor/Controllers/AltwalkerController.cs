@@ -11,9 +11,9 @@ namespace Altom.Altwalker.Controllers {
     [Route ("[controller]")]
     [HandleException]
     public class AltwalkerController : Controller {
-        private readonly Executor executor;
+        private readonly IExecutor executor;
 
-        public AltwalkerController (Executor executor) {
+        public AltwalkerController (IExecutor executor) {
             this.executor = executor;
         }
 
@@ -31,14 +31,8 @@ namespace Altom.Altwalker.Controllers {
 
         [HttpPost ("executeStep")]
         public ActionResult ExecuteStep (string modelName, string name, [FromBody] Dictionary<String, dynamic> data) {
-            try {
-                var result = executor.ExecuteStep (modelName, name, data);
-                return new JsonResult (result);
-            } catch (StepExecutionException ex) {
-                return new JsonResult (new { error = ex.InnerException.ToString () });
-            } catch (ArgumentException ex) {
-                return new JsonResult (new { error = ex.ToString () });
-            }
+            var result = executor.ExecuteStep (modelName, name, data);
+            return new JsonResult (result);
         }
 
         [HttpGet ("reset")]

@@ -8,7 +8,11 @@ namespace Altom.Altwalker.Controllers.Filters {
     {
         public override void OnException(ExceptionContext context)
         {
-            context.Result = new JsonResult (new { error = context.Exception.ToString () });
+            var error = new { 
+                message = context.Exception.Message,
+                trace = context.Exception.StackTrace
+            };
+            context.Result = new JsonResult (new { error });
         }
     }
 }

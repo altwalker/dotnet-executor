@@ -44,10 +44,9 @@ namespace Tests {
             result = _executor.ExecuteStep("ModelExample", "Success_WithTrace");
             Assert.AreEqual("Output\n",result.output);
 
-            StepExecutionException ex = Assert.Throws<StepExecutionException>(
-                () => _executor.ExecuteStep("ModelExample", "Fail"));
-
-            Assert.That(ex.InnerException.Message, Is.EqualTo("Exception message"));
+            result = _executor.ExecuteStep("ModelExample", "Fail");
+            Assert.That(result.error.message, Is.EqualTo("Throwing exception from step named Fail"));
+            Assert.That(result.error.trace, Does.Contain("Tests.ModelExample.Fail"));
         }
 
         
@@ -69,22 +68,19 @@ namespace Tests {
         [Test]
         public void ExecuteStep_InexistentModel()
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(
-                () => _executor.ExecuteStep("Inexistent", "MyStep"));
+            var result = _executor.ExecuteStep("Inexistent", "MyStep");
 
-            
-            Assert.That(ex.Message, Is.EqualTo("No model named `Inexistent` was registered in the executor service.Consider using ExecutorService.RegisterModel<Inexistent>() or ExecutorService.RegisterSetup<T>(). \n"
-            +"Parameter name: modelName"));
+            Assert.That(result.error.message, Is.EqualTo("No model named `Inexistent` was registered in the executor service."+
+            " Consider using ExecutorService.RegisterModel<Inexistent>() or ExecutorService.RegisterSetup<T>(). "));
         }
 
         [Test]
         public void ExecuteStep_InvalidStep()
         {
-            ArgumentException ex = Assert.Throws<ArgumentException>(
-                () => _executor.ExecuteStep("ModelExample", "StepDoesNotExist"));
+            var result = _executor.ExecuteStep("ModelExample", "StepDoesNotExist");
 
-            Assert.That(ex.Message, Is.EqualTo("No public method named `StepDoesNotExist` was found in class `ModelExample`. Check that the model is registered and the public method `StepDoesNotExist` exists. \n"+
-                "Parameter name: name"));
+            Assert.That(result.error.message, Is.EqualTo("No public method named `StepDoesNotExist` was found in class `ModelExample`. "+
+            "Check that the model is registered and the public method `StepDoesNotExist` exists."));
         }
     }
 
@@ -98,7 +94,7 @@ namespace Tests {
 
         public void Fail () {
             Trace.WriteLine("Fail");
-            throw new Exception("Exception message");
+            throw new Exception("Throwing exception from step named Fail");
         }
 
         public void MethodSetData(IDictionary<string, dynamic> data)
