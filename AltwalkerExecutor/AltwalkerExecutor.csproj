@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <PackageId>altwalker.executor</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Altom.Altwalker</RootNamespace>
     <IsPackable>true</IsPackable>
-    <PackageVersion>0.1</PackageVersion>
+    <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.1.1-alpha</PackageVersion>
+    <PackageVersion Condition="'$(PACKAGE_VERSION)' != ''">$(PACKAGE_VERSION)</PackageVersion>
     <Title> Altwalker dotnet executor</Title>
     <Description>
       Altwalker dotnet executor runs dotnet written tests using Altwalker.

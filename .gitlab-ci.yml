@@ -1,6 +1,6 @@
 stages:
   - test
-  - publish
+  - prerelease
 
 image: mcr.microsoft.com/dotnet/core/sdk:2.2
 
@@ -10,5 +10,11 @@ tests:
 
 
 dotnet pack:
-  stage: publish
+  stage: prerelease
+  before_script:
+    - export PACKAGE_VERSION=0.1.${CI_JOB_ID}-alpha
+    - echo $PACKAGE_VERSION
   script: dotnet pack AltwalkerExecutor
+  artifacts:
+    paths:
+    - AltwalkerExecutor/bin/Debug/altwalker.executor.*.nupkg
