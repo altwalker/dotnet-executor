@@ -11,9 +11,6 @@ tests:
 
 dotnet pack:
   stage: prerelease
-  before_script:
-    - export PACKAGE_VERSION=0.1.${CI_JOB_ID}-alpha
-    - echo $PACKAGE_VERSION
   script: dotnet pack AltwalkerExecutor
   artifacts:
     paths:
