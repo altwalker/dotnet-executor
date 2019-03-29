@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace Tests.Controllers {
+namespace Tests.unit.Controllers {
+    [TestFixture]
     public class TestAltwalkerController {
-
         AltwalkerController controller;
         Mock<IExecutor> executorMock;
 
@@ -28,10 +28,10 @@ namespace Tests.Controllers {
                 .Returns<string, string>((modelName, name)=> modelName == "MyModel" && name == "myStep");
             
             dynamic data =((JsonResult) controller.HasStep("MyModel", "myStep")).Value;
-            Assert.That(data.hasStep, Is.True);
+            Assert.That(data.payload.hasStep, Is.True);
 
             data =((JsonResult) controller.HasStep("MyModel", "inexistentStep")).Value;
-            Assert.That(data.hasStep, Is.False);
+            Assert.That(data.payload.hasStep, Is.False);
         }
 
 
@@ -45,7 +45,7 @@ namespace Tests.Controllers {
                 .Verifiable();
             
             dynamic data =((JsonResult) controller.HasModel("MyModel")).Value;
-            Assert.That(data.hasModel, Is.True);
+            Assert.That(data.payload.hasModel, Is.True);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Tests.Controllers {
             ExecuteStepResult result = new ExecuteStepResult{
                 output = "output",
                 data = new Dictionary<string, dynamic>(){{"key", "value"}},
-                error = new StepExecutionError{message="message",trace = "trace"}
+                error = new AltwalkerError{message="message",trace = "trace"}
             };
             executorMock
                 .Setup(m=> m.ExecuteStep(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IDictionary<string, dynamic>>()))
@@ -62,10 +62,10 @@ namespace Tests.Controllers {
                 .Verifiable();
             
             dynamic data =((JsonResult) controller.ExecuteStep("model", "step", null)).Value;
-            Assert.That(data.output, Is.EqualTo("output"));
-            Assert.That(data.data["key"], Is.EqualTo("value"));
-            Assert.That(data.error.message, Is.EqualTo("message"));
-            Assert.That(data.error.trace, Is.EqualTo("trace"));
+            Assert.That(data.payload.output, Is.EqualTo("output"));
+            Assert.That(data.payload.data["key"], Is.EqualTo("value"));
+            Assert.That(data.payload.error.message, Is.EqualTo("message"));
+            Assert.That(data.payload.error.trace, Is.EqualTo("trace"));
 
             executorMock.Verify();
         }
@@ -76,9 +76,8 @@ namespace Tests.Controllers {
             executorMock
                 .Setup(m=> m.Reset()).Verifiable();
             
-            dynamic data =((JsonResult) controller.Reset()).Value;
-            Assert.That(data.status, Is.EqualTo("ok"));
-
+            var result =(StatusCodeResult) controller.Reset();
+            Assert.That(result.StatusCode , Is.EqualTo(200));
             executorMock.Verify();
         }
     }

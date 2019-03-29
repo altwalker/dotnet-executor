@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using Altom.Altwalker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +12,7 @@ namespace Altwalker.Executor {
             ExecutorService service = new ExecutorService();
             service.RegisterModel<WalletModel>();
             service.RegisterSetup<Setup>();
-            service.Start(args);
+            service.Run(args);
         }
     }
 }

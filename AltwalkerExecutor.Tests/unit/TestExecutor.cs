@@ -4,7 +4,8 @@ using System.Diagnostics;
 using Altom.Altwalker;
 using NUnit.Framework;
 
-namespace Tests {
+namespace Tests.unit {
+    [TestFixture]
     public class TestExecutor {
         Executor _executor;
         Executor _executorWithStartup;
@@ -46,7 +47,7 @@ namespace Tests {
 
             result = _executor.ExecuteStep("ModelExample", "Fail");
             Assert.That(result.error.message, Is.EqualTo("Throwing exception from step named Fail"));
-            Assert.That(result.error.trace, Does.Contain("Tests.ModelExample.Fail"));
+            Assert.That(result.error.trace, Does.Contain("Tests.unit.ModelExample.Fail"));
         }
 
         
@@ -68,19 +69,17 @@ namespace Tests {
         [Test]
         public void ExecuteStep_InexistentModel()
         {
-            var result = _executor.ExecuteStep("Inexistent", "MyStep");
+            var ex = Assert.Throws<ModelNotFoundException>( ()=>_executor.ExecuteStep("Inexistent", "MyStep"));
 
-            Assert.That(result.error.message, Is.EqualTo("No model named `Inexistent` was registered in the executor service."+
-            " Consider using ExecutorService.RegisterModel<Inexistent>() or ExecutorService.RegisterSetup<T>(). "));
+            Assert.That(ex.Message, Is.EqualTo("No model named `Inexistent` was registered"));
         }
 
         [Test]
         public void ExecuteStep_InvalidStep()
         {
-            var result = _executor.ExecuteStep("ModelExample", "StepDoesNotExist");
+            var ex =Assert.Throws<StepNotFoundException>(()=> _executor.ExecuteStep("ModelExample", "StepDoesNotExist"));
 
-            Assert.That(result.error.message, Is.EqualTo("No public method named `StepDoesNotExist` was found in class `ModelExample`. "+
-            "Check that the model is registered and the public method `StepDoesNotExist` exists."));
+            Assert.That(ex.Message, Is.EqualTo("Method named `StepDoesNotExist` not found in class `ModelExample`."));
         }
     }
 

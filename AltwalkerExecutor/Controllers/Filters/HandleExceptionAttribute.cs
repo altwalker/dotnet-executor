@@ -12,6 +12,21 @@ namespace Altom.Altwalker.Controllers.Filters {
                 message = context.Exception.Message,
                 trace = context.Exception.StackTrace
             };
+            context.HttpContext.Response.StatusCode=500;
+        
+            if ( context.Exception.GetType() == typeof(ModelNotFoundException))
+            {
+                context.HttpContext.Response.StatusCode = 460;
+            }
+            if ( context.Exception.GetType() == typeof(StepNotFoundException))
+            {
+                context.HttpContext.Response.StatusCode = 461;
+            }
+            if ( context.Exception.GetType() == typeof(InvalidStepHandlerException))
+            {
+                context.HttpContext.Response.StatusCode = 462;
+            }
+            
             context.Result = new JsonResult (new { error });
         }
     }

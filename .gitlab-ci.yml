@@ -12,6 +12,8 @@ tests:
 dotnet pack:
   stage: prerelease
   script: dotnet pack AltwalkerExecutor
+  only:
+    - develop
   artifacts:
     paths:
     - AltwalkerExecutor/bin/Debug/altwalker.executor.*.nupkg

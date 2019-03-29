@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Altom.Altwalker.Controllers.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json.Linq;
 
 namespace Altom.Altwalker.Controllers {
 
@@ -20,25 +21,45 @@ namespace Altom.Altwalker.Controllers {
         [HttpGet ("hasModel")]
         public ActionResult HasModel (string name) {
             var hasModel = executor.HasModel (name);
-            return new JsonResult (new { hasModel = hasModel });
+            return new PayloadResult (new { hasModel = hasModel });
         }
 
         [HttpGet ("hasStep")]
         public ActionResult HasStep (string modelName, string name) {
             var hasStep = executor.HasStep (modelName, name);
-            return new JsonResult (new { hasStep = hasStep });
+            return new PayloadResult (new { hasStep = hasStep });
         }
 
         [HttpPost ("executeStep")]
-        public ActionResult ExecuteStep (string modelName, string name, [FromBody] Dictionary<String, dynamic> data) {
+        public ActionResult ExecuteStep (string modelName, string name, [FromBody] JObject jData) {
+
+            Dictionary<string,dynamic> data = null;
+            dynamic json = jData;
+            if ( json != null && json.data != null ) 
+            {
+                data = json.data.ToObject<Dictionary<string, dynamic>>();
+            }
             var result = executor.ExecuteStep (modelName, name, data);
-            return new JsonResult (result);
+            return new PayloadResult (result);
         }
 
-        [HttpGet ("reset")]
+        [HttpPut ("reset")]
         public ActionResult Reset () {
             executor.Reset ();
-            return new JsonResult (new { status = "ok" });
+            return new StatusCodeResult (200);
+        }
+
+        [HttpPost ("load")]
+        public ActionResult Load()
+        {
+            return new StatusCodeResult (200);
+        }
+    }
+
+    public class PayloadResult : JsonResult
+    {
+        public PayloadResult(object value) : base(new {payload=value})
+        {
         }
     }
 }
