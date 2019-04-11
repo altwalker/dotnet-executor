@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Altom.Altwalker {
+namespace Altom.AltWalker {
     /// <summary>
     /// Executes steps from registered models and setup
     /// </summary>

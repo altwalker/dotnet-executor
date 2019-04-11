@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Altom.Altwalker;
+using Altom.AltWalker;
 using NUnit.Framework;
 
 namespace Tests.unit {

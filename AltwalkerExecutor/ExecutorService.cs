@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace Altom.Altwalker {
+namespace Altom.AltWalker {
     /// <summary>
     /// Provides methods to start and stop Altwalker executor host
     /// </summary>
@@ -124,7 +124,7 @@ namespace Altom.Altwalker {
         }
         private string GetUrl(string [] args)
         {
-            string url = "http://localhost:5000";
+            string url = "http://0.0.0.0:5000";
             if ( args.Length > 0)
             {
                 var arg = args.FirstOrDefault(a=> a.StartsWith("--server.urls="));

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Altom.Altwalker.Controllers.Filters;
+using Altom.AltWalker.Controllers.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json.Linq;
 
-namespace Altom.Altwalker.Controllers {
+namespace Altom.AltWalker.Controllers {
 
     [Route ("[controller]")]
     [HandleException]

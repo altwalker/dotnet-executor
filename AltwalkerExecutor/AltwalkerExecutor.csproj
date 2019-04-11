@@ -1,16 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>altwalker.executor</PackageId>
+    <PackageId>AltWalker.Executor</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Altom.Altwalker</RootNamespace>
+    <RootNamespace>Altom.AltWalker</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.1.1-alpha</PackageVersion>
     <PackageVersion Condition="'$(PACKAGE_VERSION)' != ''">$(PACKAGE_VERSION)</PackageVersion>
-    <Title> Altwalker dotnet executor</Title>
+    <Title> AltWalker Executor</Title>
     <Description>
-      Altwalker dotnet executor runs dotnet written tests using Altwalker.
+Provides a programming interface for exposing and executing your C# tests with AltWalker.
+
+Create a console application and Run the ExecutorService to expose your tests to AltWalker
     </Description>
+    <Summary>
+      Expose and execute your C# tests with AltWalker.
+    </Summary>
+    <Authors> Altom </Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <copyright>© Altom</copyright>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageProjectUrl>https://altom.gitlab.io/altwalker/altwalker/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
@@ -18,5 +27,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
   </ItemGroup>
 </Project>

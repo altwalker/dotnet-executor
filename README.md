@@ -4,7 +4,6 @@ AltWalker is an open source, Model-based testing framework for automating your t
 
 Use Altwalker.Executor to execute your dotnet tests with AltWalker. Follow [AltWalker C# quickstart](https://altom.gitlab.io/altwalker/altwalker/quickstart.html#c-quickstart) tutorial to get started.
 
-
 # Run Altwalker.Executor locally
 
 Run tests

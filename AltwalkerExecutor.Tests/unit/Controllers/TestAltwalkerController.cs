@@ -1,7 +1,7 @@
-using Altom.Altwalker;
+using Altom.AltWalker;
 using NUnit.Framework;
 using Moq;
-using Altom.Altwalker.Controllers;
+using Altom.AltWalker.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

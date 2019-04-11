@@ -1,7 +1,7 @@
 ﻿
 
 using System;
-using Altom.Altwalker;
+using Altom.AltWalker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Altom.Altwalker;
+using Altom.AltWalker;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

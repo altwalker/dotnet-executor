@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Altom.Altwalker
+namespace Altom.AltWalker
 {
     public interface IExecutor {
         /// <summary>
