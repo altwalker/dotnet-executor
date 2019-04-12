@@ -16,4 +16,4 @@ dotnet pack:
     - develop
   artifacts:
     paths:
-    - AltwalkerExecutor/bin/Debug/altwalker.executor.*.nupkg
+    - AltwalkerExecutor/bin/Debug/AltWalker.Executor.*.nupkg
