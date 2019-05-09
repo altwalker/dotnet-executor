@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Altom.AltWalker</RootNamespace>
     <IsPackable>true</IsPackable>
-    <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.2.1</PackageVersion>
+    <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.2.2-alpha</PackageVersion>
     <PackageVersion Condition="'$(PACKAGE_VERSION)' != ''">$(PACKAGE_VERSION)</PackageVersion>
     <Title> AltWalker Executor</Title>
     <Description>
