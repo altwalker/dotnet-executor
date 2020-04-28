@@ -2,12 +2,11 @@ stages:
   - test
   - prerelease
 
-image: mcr.microsoft.com/dotnet/core/sdk:2.2
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
 
 tests:
   stage: test
   script: dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
-
 
 dotnet pack:
   stage: prerelease
@@ -16,4 +15,4 @@ dotnet pack:
     - develop
   artifacts:
     paths:
-    - AltwalkerExecutor/bin/Debug/AltWalker.Executor.*.nupkg
+      - AltwalkerExecutor/bin/Debug/AltWalker.Executor.*.nupkg
