@@ -1,4 +1,4 @@
-## .NET Executor
+## .NET Executor for AltWalker
 
 The .NET Executor provides a programming interface for exposing and executing your C# tests with AltWalker, to use the .NET Executor you need to create a console application and run the `ExecutorService` to expose your tests to AltWalker.
 
@@ -61,3 +61,7 @@ $ curl -sv http://localhost:5000/altwalker/hasModel?name=WalletModel
 ```
 $ curl -sv http://localhost:5000/altwalker/hasStep?modelName=WalletModel&name=setUpModel
 ```
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE).

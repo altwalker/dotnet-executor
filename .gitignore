@@ -1,8 +1,7 @@
-#vscode
+# VS Code
 .vscode/
 omnisharp.json
 
-
-#dotnet
+# Dotnet
 bin/
 obj/
