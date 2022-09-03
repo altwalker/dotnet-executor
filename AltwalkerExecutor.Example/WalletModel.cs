@@ -8,6 +8,7 @@ namespace Altwalker.Executor
     public class WalletModel
     {
         Wallet wallet;
+
         public void setUpModel()
         {
             wallet = new Wallet(1000);
@@ -16,17 +17,18 @@ namespace Altwalker.Executor
         #region vertices
         public void full_wallet(IDictionary<string, dynamic> data)
         {
-            data["amount"] = wallet.GetAmount(); 
+            data["amount"] = wallet.GetAmount();
             Assert.AreEqual(1000, wallet.GetAmount());
         }
+
         public void non_full_wallet(IDictionary<string, dynamic> data)
         {
             Assert.AreEqual(wallet.GetAmount(),int.Parse(data["amount"]));
             Assert.IsTrue(true);
         }
         #endregion
-        #region edges
 
+        #region edges
         public void pay_random_amount(IDictionary<string, dynamic> data)
         {
             Random r = new Random();
@@ -36,17 +38,16 @@ namespace Altwalker.Executor
 
             data["amount"] = wallet.GetAmount();
             Trace.WriteLine($"payed {toPay}");
-            
-        }
 
+        }
         #endregion
     }
+
     public class Setup
     {
         public void SetupRun()
         {}
     }
-
 
     public class Wallet
     {

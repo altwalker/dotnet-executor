@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using Altom.AltWalker;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
