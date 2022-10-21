@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '2.1.x'
+
+      - name: Build
+        run: dotnet pack AltwalkerExecutor
+
+      - name: Upload the build
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: build
+          path: 'AltwalkerExecutor/bin/Debug/AltWalker.Executor.*.nupkg'
