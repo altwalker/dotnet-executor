@@ -10,9 +10,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Setup .NET Core SDK 3.1.x
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '3.1.x'
 
       - name: Run tests
         run: dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
+
+      - name: Upload log files
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: tests-logs
+          path: '**/*.log'
