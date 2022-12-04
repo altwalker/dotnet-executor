@@ -19,7 +19,7 @@ To expose your tests to AltWalker, create a console application and Run the Exec
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <copyright>© Altom</copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageProjectUrl>https://altom.gitlab.io/altwalker/altwalker/</PackageProjectUrl>
+    <PackageProjectUrl>https://altwalker.github.io/altwalker/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
@@ -27,6 +27,6 @@ To expose your tests to AltWalker, create a console application and Run the Exec
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitLab" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
