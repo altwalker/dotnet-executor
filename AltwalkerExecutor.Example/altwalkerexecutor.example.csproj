@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>Altwalker.Executor</RootNamespace>
   </PropertyGroup>
@@ -14,5 +13,4 @@
   <ItemGroup>
     <ProjectReference Include="..\AltwalkerExecutor\AltwalkerExecutor.csproj" />
   </ItemGroup>
-
 </Project>
