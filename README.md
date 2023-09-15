@@ -4,7 +4,7 @@ The .NET Executor provides a programming interface for exposing and executing yo
 
 Use `Altwalker.Executor` to execute your .NET tests with AltWalker. Follow [AltWalker C# Quickstart](https://altwalker.github.io/altwalker/quickstart.html) tutorial to get started.
 
-Read the full documentation on https://altwalker.github.io/altwalker.
+Read the full documentation on <https://altwalker.github.io/altwalker>.
 
 ## Usage
 
@@ -12,7 +12,7 @@ You need to create a console application and run the `ExecutorService` to expose
 
 Your console application needs to have a `Main` that registers your models and starts the executor service:
 
-```c#
+```csharp
 public class Program {
 
     public static void Main(string[] args) {
@@ -34,32 +34,32 @@ For a more detailed example you can check the example from `AltwalkerExecutor.Ex
 
 ### Run Tests
 
-```
-$ dotnet test AltwalkerExecutor.Tests/
+```bash
+dotnet test AltwalkerExecutor.Tests/
 ```
 
 ### Run the service locally
 
 To start the web service locally run:
 
-```
-$ dotnet run --project path/to/project.csproj --server.urls=http://localhost:5000
+```bash
+dotnet run --project path/to/project.csproj --server.urls=http://localhost:5000
 ```
 
 You can start the web server with the example from `AltwalkerExecutor.Exampele/`:
 
-```
-$ dotnet run --project AltwalkerExecutor.Example/altwalkerexecutor.example.csproj --server.urls=http://localhost:5000
+```bash
+dotnet run --project AltwalkerExecutor.Example/altwalkerexecutor.example.csproj --server.urls=http://localhost:5000
 ```
 
 You can run the following commands to check that the service started:
 
-```
-$ curl -sv http://localhost:5000/altwalker/hasModel?name=WalletModel
+```bash
+curl -sv http://localhost:5000/altwalker/hasModel?name=WalletModel
 ```
 
-```
-$ curl -sv http://localhost:5000/altwalker/hasStep?modelName=WalletModel&name=setUpModel
+```bash
+curl -sv http://localhost:5000/altwalker/hasStep?modelName=WalletModel&name=setUpModel
 ```
 
 ## Support
