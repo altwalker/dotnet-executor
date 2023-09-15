@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>AltWalker.Executor</PackageId>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5;net6;net7</TargetFrameworks>
     <RootNamespace>Altom.AltWalker</RootNamespace>
     <IsPackable>true</IsPackable>
     <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.3.1-alpha</PackageVersion>
