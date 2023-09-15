@@ -17,7 +17,7 @@ namespace Altom.AltWalker
     public class ExecutorService
     {
         IWebHost host = null;
-        HashSet<Type> models = new HashSet<Type> ();
+        HashSet<Type> models = new HashSet<Type>();
         Type setup = null;
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Altom.AltWalker
         /// <typeparam name="T"></typeparam>
         public void RegisterSetup<T>()
         {
-            RegisterSetup(typeof (T));
+            RegisterSetup(typeof(T));
         }
 
         /// <summary>
@@ -78,17 +78,18 @@ namespace Altom.AltWalker
         /// <typeparam name="T"></typeparam>
         public void RegisterModel<T>()
         {
-            RegisterModels(typeof (T));
+            RegisterModels(typeof(T));
         }
 
         /// <summary>
         /// Register model types.
         /// </summary>
         /// <param name="models"></param>
-        public void RegisterModels (params Type[] models)
+        public void RegisterModels(params Type[] models)
         {
             RequireServiceNotStarted();
-            foreach (var model in models) {
+            foreach (var model in models)
+            {
                 this.models.Add(model);
             }
         }
@@ -104,7 +105,8 @@ namespace Altom.AltWalker
 
         private void RequireServiceNotStarted()
         {
-            if (host != null) {
+            if (host != null)
+            {
                 throw new Exception("Service already started. Register the models before starting the service.");
             }
         }
@@ -113,11 +115,11 @@ namespace Altom.AltWalker
         {
             string url = GetUrl(args);
             this.host = new WebHostBuilder()
-                .UseKestrel ()
+                .UseKestrel()
                 .UseUrls(url)
                 .ConfigureServices (services => {
-                    services.AddSingleton (typeof (IExecutor), new Executor (models, setup));
-                    services.AddMvc ();
+                    services.AddSingleton(typeof (IExecutor), new Executor(models, setup));
+                    services.AddMvc();
                 })
                 .Configure (app => {
                     app.UseMvc();
@@ -125,7 +127,7 @@ namespace Altom.AltWalker
                         await next();
                         if (context.Response.StatusCode == 404)
                         {
-                            var err = new { error = new {message="Handler not found" }};
+                            var err = new { error = new { message="Handler not found" } };
 
                             context.Response.ContentType = "application/json";
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(err));
@@ -140,7 +142,7 @@ namespace Altom.AltWalker
             string url = "http://0.0.0.0:5000";
             if (args.Length > 0)
             {
-                var arg = args.FirstOrDefault(a=> a.StartsWith("--server.urls="));
+                var arg = args.FirstOrDefault(a => a.StartsWith("--server.urls="));
                 url = arg.Split('=').Last();
             }
             return url;

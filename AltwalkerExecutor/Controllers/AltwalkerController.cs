@@ -9,33 +9,33 @@ using Newtonsoft.Json.Linq;
 
 namespace Altom.AltWalker.Controllers
 {
-    [Route ("[controller]")]
+    [Route("[controller]")]
     [HandleException]
     public class AltwalkerController : Controller
     {
         private readonly IExecutor executor;
 
-        public AltwalkerController (IExecutor executor)
+        public AltwalkerController(IExecutor executor)
         {
             this.executor = executor;
         }
 
         [HttpGet("hasModel")]
-        public ActionResult HasModel (string name)
+        public ActionResult HasModel(string name)
         {
             var hasModel = executor.HasModel (name);
             return new PayloadResult(new { hasModel = hasModel });
         }
 
         [HttpGet("hasStep")]
-        public ActionResult HasStep (string modelName, string name)
+        public ActionResult HasStep(string modelName, string name)
         {
             var hasStep = executor.HasStep (modelName, name);
             return new PayloadResult(new { hasStep = hasStep });
         }
 
         [HttpPost("executeStep")]
-        public ActionResult ExecuteStep (string modelName, string name, [FromBody] JObject jData)
+        public ActionResult ExecuteStep(string modelName, string name, [FromBody] JObject jData)
         {
             Dictionary<string,dynamic> data = null;
             dynamic json = jData;
@@ -48,7 +48,7 @@ namespace Altom.AltWalker.Controllers
         }
 
         [HttpPut("reset")]
-        public ActionResult Reset ()
+        public ActionResult Reset()
         {
             executor.Reset();
             return new StatusCodeResult(200);
@@ -63,7 +63,7 @@ namespace Altom.AltWalker.Controllers
 
     public class PayloadResult : JsonResult
     {
-        public PayloadResult(object value) : base(new {payload=value})
+        public PayloadResult(object value) : base(new { payload=value })
         {
         }
     }

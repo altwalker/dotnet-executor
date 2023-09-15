@@ -152,7 +152,8 @@ namespace Tests.Integration
         }
     }
 
-    public class ModelExample {
+    public class ModelExample
+    {
         public void vertex_one()
         {
         }

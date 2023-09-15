@@ -1,3 +1,3 @@
 using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("AltwalkerExecutor.Tests")]
+[assembly: InternalsVisibleTo("AltwalkerExecutor.Tests")]

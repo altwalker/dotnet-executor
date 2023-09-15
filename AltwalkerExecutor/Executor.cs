@@ -48,12 +48,14 @@ namespace Altom.AltWalker
         public bool HasStep(string modelName, string name)
         {
             var type = GetModelType(modelName);
-            if (type == null) {
+            if (type == null)
+            {
                 return false;
             }
 
             var handlerType = TryGetStepHandler(type, name, out MethodInfo method);
-            if (handlerType == StepHandlerType.Data || handlerType == StepHandlerType.NoData) {
+            if (handlerType == StepHandlerType.Data || handlerType == StepHandlerType.NoData)
+            {
                 return true;
             }
             return false;
@@ -226,17 +228,23 @@ namespace Altom.AltWalker
 
     public class StepNotFoundException : Exception
     {
-        public StepNotFoundException(string modelName, string stepName) : base($"Method named `{stepName}` not found in class `{modelName}`.") { }
+        public StepNotFoundException(string modelName, string stepName) : base($"Method named `{stepName}` not found in class `{modelName}`.")
+        {
+        }
     }
 
     public class ModelNotFoundException : Exception
     {
-        public ModelNotFoundException(string modelName) : base($"No model named `{modelName}` was registered") { }
+        public ModelNotFoundException(string modelName) : base($"No model named `{modelName}` was registered")
+        {
+        }
     }
 
     public class InvalidStepHandlerException : Exception
     {
-        public InvalidStepHandlerException(string modelName, string stepName, string reason) : base($"{reason} for `{stepName}` in type `{modelName}`.") { }
+        public InvalidStepHandlerException(string modelName, string stepName, string reason) : base($"{reason} for `{stepName}` in type `{modelName}`.")
+        {
+        }
     }
 
     // /// <summary>
