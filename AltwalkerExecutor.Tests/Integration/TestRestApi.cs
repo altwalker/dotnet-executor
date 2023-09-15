@@ -36,22 +36,22 @@ namespace Tests.Integration
             executorService.StopAsync().GetAwaiter().GetResult();
         }
 
-        public async Task Get(str url)
+        public async Task<HttpResponseMessage> Get(string url)
         {
-            return await httpClient.GetAsync(baseUri + uri);
+            return await httpClient.GetAsync(baseUri + url);
         }
 
-        public async Task Post(str url, str content)
+        public async Task<HttpResponseMessage> Post(string url, string content)
         {
             return await httpClient.PostAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
         }
 
-        public async Task Put(str url, str content)
+        public async Task<HttpResponseMessage> Put(string url, string content)
         {
             return await httpClient.PutAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
         }
 
-        public async dynamic GetJSON(Task response)
+        public async Task<dynamic> GetJSON(HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
             var json = JsonConvert.DeserializeObject<dynamic>(content);
@@ -62,8 +62,8 @@ namespace Tests.Integration
         [Test]
         public async Task TestUnhandledUrls()
         {
-            var response = Get("someRandomPath");
-            var json = GetJSON(response);
+            var response = await Get("someRandomPath");
+            var json = await GetJSON(response);
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
             Assert.IsNotNull(json);
@@ -73,8 +73,8 @@ namespace Tests.Integration
         [Test]
         public async Task TestModelNotFound()
         {
-            var response = Post("altwalker/executeStep?modelName=InvalidModel&name=step", string.Empty);
-            var json = GetJSON(response);
+            var response = await Post("altwalker/executeStep?modelName=InvalidModel&name=step", string.Empty);
+            var json = await GetJSON(response);
 
             Assert.AreEqual(460, (int)response.StatusCode);
             Assert.IsNotNull(json);
@@ -84,8 +84,8 @@ namespace Tests.Integration
         [Test]
         public async Task TestStepNotFound()
         {
-            var response = Post("altwalker/executeStep?modelName=ModelExample&name=invalidStep", string.Empty);
-            var json = GetJSON(response);
+            var response = await Post("altwalker/executeStep?modelName=ModelExample&name=invalidStep", string.Empty);
+            var json = await GetJSON(response);
 
             Assert.AreEqual(461, (int)response.StatusCode);
             Assert.IsNotNull(json);
@@ -95,8 +95,8 @@ namespace Tests.Integration
         [Test]
         public async Task TestInvalidHandler()
         {
-            var response = Post("altwalker/executeStep?modelName=ModelExample&name=invalid_handler", string.Empty);
-            var json = GetJSON(response);
+            var response = await Post("altwalker/executeStep?modelName=ModelExample&name=invalid_handler", string.Empty);
+            var json = await GetJSON(response);
 
             Assert.AreEqual(462, (int)response.StatusCode);
             Assert.IsNotNull(json);
@@ -106,7 +106,7 @@ namespace Tests.Integration
         [Test]
         public async Task TestMultipleHandlers()
         {
-            var json = GetJSON(Post("altwalker/executeStep?modelName=ModelExample&name=multiple_overloads", string.Empty));
+            var json = await GetJSON(await Post("altwalker/executeStep?modelName=ModelExample&name=multiple_overloads", string.Empty));
 
             Assert.IsNotNull(json);
             Assert.AreEqual("MultipleHandlers for `multiple_overloads` in type `ModelExample`.", json["error"]["message"].Value);
@@ -116,8 +116,8 @@ namespace Tests.Integration
         public async Task TestExecuteStepWithData()
         {
             var content = @"{""data"": { ""key"":""value"" }}";
-            var response = Post("altwalker/executeStep?modelName=ModelExample&name=handler_with_data", content);
-            var json = GetJSON(response);
+            var response = await Post("altwalker/executeStep?modelName=ModelExample&name=handler_with_data", content);
+            var json = await GetJSON(response);
 
             Assert.AreEqual(200, (int)response.StatusCode);
             Assert.That(json.payload.data["key"].Value, Is.EqualTo("value"));
@@ -128,8 +128,8 @@ namespace Tests.Integration
         [Test]
         public async Task TestExecuteStepWithContext()
         {
-            var response = Post("altwalker/executeStep?modelName=ModelExample&name=handler_with_return_value", string.Empty);
-            var json = GetJSON(response);
+            var response = await Post("altwalker/executeStep?modelName=ModelExample&name=handler_with_return_value", string.Empty);
+            var json = await GetJSON(response);
 
             Assert.AreEqual(200, (int)response.StatusCode);
             Assert.That(json.payload.result.Value, Is.EqualTo("message from the other side"));
@@ -139,7 +139,7 @@ namespace Tests.Integration
         public async Task TestLoad()
         {
             var content = @"{""path"": ""somepath""";
-            var response = Post("altwalker/load", content);
+            var response = await Post("altwalker/load", content);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
@@ -148,7 +148,7 @@ namespace Tests.Integration
         public async Task TestReset()
         {
             var content = @"{""path"": ""somepath""";
-            var response = Put("altwalker/reset", content);
+            var response = await Put("altwalker/reset", content);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }

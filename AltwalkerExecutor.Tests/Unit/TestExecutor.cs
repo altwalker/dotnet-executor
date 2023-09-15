@@ -53,7 +53,7 @@ namespace Tests.Unit
 
             result = _executor.ExecuteStep("ModelExample", "Fail");
             Assert.That(result.error.message, Is.EqualTo("Throwing exception from step named Fail"));
-            Assert.That(result.error.trace, Does.Contain("Tests.unit.ModelExample.Fail"));
+            Assert.That(result.error.trace, Does.Contain("Tests.Unit.ModelExample.Fail"));
         }
 
 
