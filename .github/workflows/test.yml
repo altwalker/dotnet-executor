@@ -18,10 +18,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        dotnet-version: [ '3.1.x', '', '6.x', '7.x', '8.x' ]
-
     steps:
       - uses: actions/checkout@v3
 
@@ -51,10 +47,11 @@ jobs:
           dotnet-version: 8.x
 
       - name: Build
-        run: dotnet pack AltwalkerExecutor
+        run: |
+          dotnet pack AltwalkerExecutor
 
       - name: Run tests
-        run:
+        run: |
           dotnet restore AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
           dotnet build AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
           dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
