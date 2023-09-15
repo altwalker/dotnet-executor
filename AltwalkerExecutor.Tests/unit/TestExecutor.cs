@@ -17,7 +17,7 @@ namespace Tests.Unit
         {
             List<Type> types = new List<Type>() { typeof(ModelExample) };
             _executor = new Executor(types);
-            _executorWithStartup = new Executor(new List<Type> {}, typeof(Startup));
+            _executorWithStartup = new Executor(new List<Type> { }, typeof(Startup));
         }
 
         [Test]
@@ -103,7 +103,8 @@ namespace Tests.Unit
         }
     }
 
-    public class ModelExample {
+    public class ModelExample
+    {
         public void Success_NoTrace()
         {
         }
@@ -124,10 +125,12 @@ namespace Tests.Unit
             data["passed"] = true;
         }
 
-        public void MethodNoData() {
+        public void MethodNoData()
+        {
         }
 
-        public int MethodReturnValue() {
+        public int MethodReturnValue()
+        {
             return 100;
         }
 

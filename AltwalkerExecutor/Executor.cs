@@ -112,15 +112,18 @@ namespace Altom.AltWalker
                         var ret = stepMethod.Invoke(instance, new[] { data });
                         stepResult.data = data;
                         stepResult.result = ret;
-                    } else if (stepType == StepHandlerType.NoData)
+                    }
+                    else if (stepType == StepHandlerType.NoData)
                     {
                         var ret = stepMethod.Invoke(instance, null);
                         stepResult.result = ret;
-                    } else
+                    }
+                    else
                     {
                         throw new ArgumentException("Invalid StepHandlerType type.", nameof(stepType));
                     }
-                } catch (TargetInvocationException tie)
+                }
+                catch (TargetInvocationException tie)
                 {
                     stepResult.error = new AltwalkerError
                     {
@@ -136,7 +139,8 @@ namespace Altom.AltWalker
 
         private Type GetModelType(string modelName)
         {
-            if (string.IsNullOrEmpty(modelName)) {
+            if (string.IsNullOrEmpty(modelName))
+            {
                 modelName = "Setup";
             }
 
@@ -160,7 +164,8 @@ namespace Altom.AltWalker
             return instance;
         }
 
-        enum StepHandlerType {
+        enum StepHandlerType
+        {
             NoData,
             Data,
             InvalidHandler,
@@ -168,15 +173,18 @@ namespace Altom.AltWalker
             NoHandler,
         }
 
-        private StepHandlerType TryGetStepHandler(Type type, string stepName, out MethodInfo stepMethod) {
+        private StepHandlerType TryGetStepHandler(Type type, string stepName, out MethodInfo stepMethod)
+        {
             stepMethod = null;
             var methods = GetStepMethods(type, stepName);
 
-            if (methods.Count > 1) {
+            if (methods.Count > 1)
+            {
                 return StepHandlerType.MultipleHandlers;
             }
 
-            if (methods.Count == 0) {
+            if (methods.Count == 0)
+            {
                 return StepHandlerType.NoHandler;
             }
 
@@ -186,10 +194,12 @@ namespace Altom.AltWalker
             if (parameters.Length == 1 && parameters[0].ParameterType == typeof(IDictionary<string, dynamic>))
             {
                 return StepHandlerType.Data;
-            } else if (parameters.Length == 0)
+            }
+            else if (parameters.Length == 0)
             {
                 return StepHandlerType.NoData;
-            } else
+            }
+            else
             {
                 stepMethod = null;
                 return StepHandlerType.InvalidHandler;

@@ -9,8 +9,11 @@ namespace Altom.AltWalker.Controllers.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            var error = new { message = context.Exception.Message,
-                              trace = context.Exception.StackTrace };
+            var error = new
+            {
+                message = context.Exception.Message,
+                trace = context.Exception.StackTrace
+            };
             context.HttpContext.Response.StatusCode = 500;
 
             if (context.Exception.GetType() == typeof(ModelNotFoundException))

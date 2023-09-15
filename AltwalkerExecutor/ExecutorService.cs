@@ -117,17 +117,20 @@ namespace Altom.AltWalker
             this.host = new WebHostBuilder()
                 .UseKestrel()
                 .UseUrls(url)
-                .ConfigureServices (services => {
-                    services.AddSingleton(typeof (IExecutor), new Executor(models, setup));
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton(typeof(IExecutor), new Executor(models, setup));
                     services.AddMvc();
                 })
-                .Configure (app => {
+                .Configure(app =>
+                {
                     app.UseMvc();
-                    app.Use(async (context, next) => {
+                    app.Use(async (context, next) =>
+                    {
                         await next();
                         if (context.Response.StatusCode == 404)
                         {
-                            var err = new { error = new { message="Handler not found" } };
+                            var err = new { error = new { message = "Handler not found" } };
 
                             context.Response.ContentType = "application/json";
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(err));
@@ -137,7 +140,7 @@ namespace Altom.AltWalker
                 .Build();
         }
 
-        private string GetUrl(string [] args)
+        private string GetUrl(string[] args)
         {
             string url = "http://0.0.0.0:5000";
             if (args.Length > 0)
