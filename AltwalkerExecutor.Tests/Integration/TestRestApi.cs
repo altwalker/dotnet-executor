@@ -81,19 +81,6 @@ namespace Tests.Integration
             Assert.AreEqual("InvalidHandler for `invalid_handler` in type `ModelExample`.", json["error"]["message"].Value);
         }
 
-        [Test]
-        public async Task Test_Rest_MultipleHandlers()
-        {
-            var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=multiple_overloads",
-                new StringContent(string.Empty, Encoding.UTF8, "application/json"));
-
-            Assert.AreEqual(462, (int)response.StatusCode);
-            var content = await response.Content.ReadAsStringAsync();
-            var json = JsonConvert.DeserializeObject<dynamic>(content);
-            Assert.IsNotNull(json);
-            Assert.AreEqual("MultipleHandlers for `multiple_overloads` in type `ModelExample`.", json["error"]["message"].Value);
-        }
-
         public async dynamic PostExecuteStep(str url, str content) {
             var response = await httpClient.PostAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -103,16 +90,18 @@ namespace Tests.Integration
         }
 
         [Test]
+        public async Task Test_Rest_MultipleHandlers()
+        {
+            var json = PostExecuteStep("altwalker/executeStep?modelName=ModelExample&name=multiple_overloads", string.Empty);
+
+            Assert.IsNotNull(json);
+            Assert.AreEqual("MultipleHandlers for `multiple_overloads` in type `ModelExample`.", json["error"]["message"].Value);
+        }
+
+        [Test]
         public async Task Test_Rest_ExecuteStepWithData()
         {
             var content = @"{""data"": { ""key"":""value"" }}";
-            // var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=handler_with_data",
-            //     new StringContent(content, Encoding.UTF8, "application/json"));
-
-            // var responseContent = await response.Content.ReadAsStringAsync();
-
-            // var json = JsonConvert.DeserializeObject<dynamic>(responseContent);
-
             var json = PostExecuteStep("altwalker/executeStep?modelName=ModelExample&name=handler_with_data", content);
 
             Assert.AreEqual(200, (int)response.StatusCode);
