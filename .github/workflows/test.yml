@@ -20,21 +20,44 @@ jobs:
 
     strategy:
       matrix:
-        dotnet-version: [ '3.1.x', '5.0.x', '6.0.x', '7.0.x', '8.0.x' ]
+        dotnet-version: [ '3.1.x', '', '6.x', '7.x', '8.x' ]
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup .NET ${{ matrix.dotnet-version }}
+      - name: Setup .NET 3.1
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: 3.1.x
+
+      - name: Setup .NET 5
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 5.x
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.x
+
+      - name: Setup .NET 7
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
 
       - name: Build
         run: dotnet pack AltwalkerExecutor
 
       - name: Run tests
-        run: dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
+        run:
+          dotnet restore AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
+          dotnet build AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
+          dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
 
       - name: Upload log files
         uses: actions/upload-artifact@v2
