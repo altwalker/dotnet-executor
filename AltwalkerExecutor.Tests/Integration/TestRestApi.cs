@@ -94,22 +94,33 @@ namespace Tests.Integration
             Assert.AreEqual("MultipleHandlers for `multiple_overloads` in type `ModelExample`.", json["error"]["message"].Value);
         }
 
+        public async dynamic PostExecuteStep(str url, str content) {
+            var response = await httpClient.PostAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var json = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+            return json;
+        }
+
         [Test]
         public async Task Test_Rest_ExecuteStepWithData()
         {
             var content = @"{""data"": { ""key"":""value"" }}";
-            var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=handler_with_data",
-                new StringContent(content, Encoding.UTF8, "application/json"));
+            // var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=handler_with_data",
+            //     new StringContent(content, Encoding.UTF8, "application/json"));
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            // var responseContent = await response.Content.ReadAsStringAsync();
 
-            var json = JsonConvert.DeserializeObject<dynamic>(responseContent);
+            // var json = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+            var json = PostExecuteStep("altwalker/executeStep?modelName=ModelExample&name=handler_with_data", content);
 
             Assert.AreEqual(200, (int)response.StatusCode);
             Assert.That(json.payload.data["key"].Value, Is.EqualTo("value"));
             Assert.That(json.payload.data["copy"].Value, Is.EqualTo("value"));
             Assert.That(json.payload.data["passed"].Value, Is.EqualTo(true));
         }
+
         [Test]
         public async Task Test_Rest_ExecuteStepWithContext()
         {
