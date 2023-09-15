@@ -48,7 +48,7 @@ namespace Tests.Integration
 
         public async Task Put(str url, str content)
         {
-            return await httpClient.PostAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
+            return await httpClient.PutAsync(baseUri + url, new StringContent(content, Encoding.UTF8, "application/json"));
         }
 
         public async dynamic GetJSON(Task response)

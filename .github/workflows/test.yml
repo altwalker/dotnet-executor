@@ -30,6 +30,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Build
+        run: dotnet pack AltwalkerExecutor
+
       - name: Run tests
         run: dotnet test AltwalkerExecutor.Tests/AltwalkerExecutor.Tests.csproj
 
