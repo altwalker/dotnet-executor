@@ -1,16 +1,15 @@
 # .NET Executor for AltWalker
 
-The .NET Executor provides a programming interface for exposing and executing your C# tests with AltWalker, to use the .NET Executor you need to create a console application and run the `ExecutorService` to expose your tests to AltWalker.
 
-Use `Altwalker.Executor` to execute your .NET tests with AltWalker. Follow [AltWalker C# Quickstart](https://altwalker.github.io/altwalker/quickstart.html) tutorial to get started.
+The .NET Executor offers a convenient programming interface for exposing and executing your C# tests with AltWalker. To utilize the .NET Executor effectively, you'll need to create a console application and run the `ExecutorService` to make your tests accessible to AltWalker.
+
+For executing your .NET tests with AltWalker, use the `Altwalker.Executor`. To get started, follow the [AltWalker C# Quickstart](https://altwalker.github.io/altwalker/quickstart.html) tutorial.
 
 Read the full documentation on <https://altwalker.github.io/altwalker>.
 
 ## Usage
 
-You need to create a console application and run the `ExecutorService` to expose your tests to AltWalker.
-
-Your console application needs to have a `Main` that registers your models and starts the executor service:
+To use the .NET Executor, you must create a console application and initiate the `ExecutorService` to expose your tests to AltWalker. Your console application should contain a `Main` method that registers your models and launches the executor service, like so:
 
 ```csharp
 public class Program {
@@ -28,7 +27,7 @@ public class Program {
 }
 ```
 
-For a more detailed example you can check the example from `AltwalkerExecutor.Example/`.
+For a more in-depth example, you can explore the sample in [`AltwalkerExecutor.Example/`](https://github.com/altwalker/dotnet-executor/tree/main/AltwalkerExecutor.Example).
 
 ## Setting Up a Development Environment
 
@@ -40,13 +39,13 @@ dotnet test AltwalkerExecutor.Tests/
 
 ### Run the service locally
 
-To start the web service locally run:
+To start the web service on your local machine, execute the following command:
 
 ```bash
 dotnet run --project path/to/project.csproj --server.urls=http://localhost:5000
 ```
 
-You can start the web server with the example from `AltwalkerExecutor.Exampele/`:
+To start the web server from the example found in `AltwalkerExecutor.Example/`:
 
 ```bash
 dotnet run --project AltwalkerExecutor.Example/altwalkerexecutor.example.csproj --server.urls=http://localhost:5000

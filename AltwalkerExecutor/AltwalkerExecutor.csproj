@@ -7,21 +7,16 @@
     <PackageVersion Condition="'$(PACKAGE_VERSION)' == ''">0.3.1-alpha</PackageVersion>
     <PackageVersion Condition="'$(PACKAGE_VERSION)' != ''">$(PACKAGE_VERSION)</PackageVersion>
     <Title> AltWalker Executor</Title>
-    <Description>
-Provides a programming interface for exposing and executing your C# tests with AltWalker.
-
-To expose your tests to AltWalker, create a console application and Run the ExecutorService.
-    </Description>
-    <Summary>
-      Execute your C# tests with AltWalker.
-    </Summary>
-    <Authors> Altom </Authors>
+    <Summary>A .NET executor for AltWalker, a convenient programming interface for exposing and executing your C# tests within the AltWalker framework.</Summary>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>Altom Consulting</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <copyright>© Altom</copyright>
+    <copyright>© Altom Consulting</copyright>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageProjectUrl>https://altwalker.github.io/altwalker/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="" />
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
