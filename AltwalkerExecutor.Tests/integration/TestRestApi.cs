@@ -8,16 +8,18 @@ using Altom.AltWalker;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Tests.integration {
+namespace Tests.Integration
+{
     [TestFixture]
-    public class TestRestApi {
+    public class TestRestApi
+    {
         Uri baseUri;
         ExecutorService executorService;
         HttpClient httpClient;
 
-
         [OneTimeSetUp]
-        public void Init() {
+        public void Init()
+        {
             Console.WriteLine("OneTimeSetUp");
             executorService = new ExecutorService();
             executorService.RegisterModel<ModelExample>();
@@ -28,7 +30,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_UnhandledUrls() {
+        public async Task Test_Rest_UnhandledUrls()
+        {
             var response = await httpClient.GetAsync(baseUri + "someRandomPath");
 
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
@@ -39,7 +42,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_ModelNotFound() {
+        public async Task Test_Rest_ModelNotFound()
+        {
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=invalidmodel&name=step",
                 new StringContent(string.Empty, Encoding.UTF8, "application/json"));
             Assert.AreEqual(460, (int)response.StatusCode);
@@ -50,7 +54,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_StepNotFound() {
+        public async Task Test_Rest_StepNotFound()
+        {
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=invalidStep",
                 new StringContent(string.Empty, Encoding.UTF8, "application/json"));
 
@@ -63,7 +68,8 @@ namespace Tests.integration {
 
 
         [Test]
-        public async Task Test_Rest_InvalidHandler() {
+        public async Task Test_Rest_InvalidHandler()
+        {
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=invalid_handler",
                 new StringContent(string.Empty, Encoding.UTF8, "application/json"));
 
@@ -76,7 +82,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_MultipleHandlers() {
+        public async Task Test_Rest_MultipleHandlers()
+        {
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=multiple_overloads",
                 new StringContent(string.Empty, Encoding.UTF8, "application/json"));
 
@@ -88,7 +95,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_ExecuteStepWithData() {
+        public async Task Test_Rest_ExecuteStepWithData()
+        {
             var content = @"{""data"": { ""key"":""value"" }}";
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=handler_with_data",
                 new StringContent(content, Encoding.UTF8, "application/json"));
@@ -103,7 +111,8 @@ namespace Tests.integration {
             Assert.That(json.payload.data["passed"].Value, Is.EqualTo(true));
         }
         [Test]
-        public async Task Test_Rest_ExecuteStepWithContext() {
+        public async Task Test_Rest_ExecuteStepWithContext()
+        {
             // handler_with_return_value
             // return "message from the other side";
             var response = await httpClient.PostAsync(baseUri + "altwalker/executeStep?modelName=ModelExample&name=handler_with_return_value",
@@ -118,7 +127,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_Load() {
+        public async Task Test_Rest_Load()
+        {
             var content = @"{""path"": ""somepath""";
             var response = await httpClient.PostAsync(baseUri + "altwalker/load",
                 new StringContent(content, Encoding.UTF8, "application/json"));
@@ -126,7 +136,8 @@ namespace Tests.integration {
         }
 
         [Test]
-        public async Task Test_Rest_Reset() {
+        public async Task Test_Rest_Reset()
+        {
             var content = @"{""path"": ""somepath""";
             var response = await httpClient.PutAsync(baseUri + "altwalker/reset",
                 new StringContent(content, Encoding.UTF8, "application/json"));
@@ -134,25 +145,38 @@ namespace Tests.integration {
         }
 
 
-
         [OneTimeTearDown]
-        public void Cleanup() {
+        public void Cleanup()
+        {
             executorService.StopAsync().GetAwaiter().GetResult();
         }
     }
 
     public class ModelExample {
-        public void vertex_one() { }
+        public void vertex_one()
+        {
+        }
 
-        public void invalid_handler(string expecting_something) { }
-        public void multiple_overloads() { }
-        public void multiple_overloads(int x) { }
+        public void invalid_handler(string expecting_something)
+        {
+        }
 
-        public void handler_with_data(IDictionary<string, object> data) {
+        public void multiple_overloads()
+        {
+        }
+
+        public void multiple_overloads(int x)
+        {
+        }
+
+        public void handler_with_data(IDictionary<string, object> data)
+        {
             data["passed"] = true;
             data["copy"] = data["key"];
         }
-        public string handler_with_return_value() {
+
+        public string handler_with_return_value()
+        {
             return "message from the other side";
         }
     }

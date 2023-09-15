@@ -23,7 +23,7 @@ namespace Altwalker.Executor
 
         public void non_full_wallet(IDictionary<string, dynamic> data)
         {
-            Assert.AreEqual(wallet.GetAmount(),int.Parse(data["amount"]));
+            Assert.AreEqual(wallet.GetAmount(), int.Parse(data["amount"]));
             Assert.IsTrue(true);
         }
         #endregion
@@ -46,14 +46,15 @@ namespace Altwalker.Executor
     public class Setup
     {
         public void SetupRun()
-        {}
+        {
+        }
     }
 
     public class Wallet
     {
         private int amount;
 
-        public Wallet (int amount)
+        public Wallet(int amount)
         {
             this.amount = amount;
         }

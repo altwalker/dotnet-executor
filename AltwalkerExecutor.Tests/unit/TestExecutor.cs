@@ -4,7 +4,8 @@ using System.Diagnostics;
 using Altom.AltWalker;
 using NUnit.Framework;
 
-namespace Tests.unit {
+namespace Tests.Unit
+{
     [TestFixture]
     public class TestExecutor {
         Executor _executor;
